@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metro Card Application</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="homepage">
+        <h2>Welcome To the MetroCard Management Application</h2>
+
+        <button onclick="newuser()">NewUser</button><br><br>
+        <button onclick="registereduser()">Registered User</button>
+    </div>
+
+    <div id="newuserpage">
+        <h2>New User Registration Page</h2>
+        <label>UserName:</label><input type="text" id="newusername"><br><br>
+        <label>PhoneNumber:</label><input type="number" id="newuserphonenumber"><br><br>
+
+        <button onclick="register()">Register</button>
+        <button onclick="Exit()">Exit</button>
+    </div>
+
+    <div id="reigistereduserpage">
+        <h2>Login Page</h2>
+        <label>CardNumber:</label><input type="text" id="cardnumber"><br><br>
+        
+        <button onclick="login()">LogIn</button>
+        <button onclick="Exit()">Exit</button>
+        <hr><br>
+
+        <h3>Available Users</h3>
+        <br>
+        <label id="availableusers"></label>
+    </div>
+
+    <div id="mainmenu">
+        <button onclick="Home()">Home</button>
+        <button onclick="Balancecheck()">Balance Check</button>
+        <button onclick="Recharge()">Recharge</button>
+        <button onclick="Viewtravelhistory()">View Travel History</button>
+        <button onclick="Travel()">Travel</button>
+        <button onclick="Exit()">Exit</button>
+    </div>
+ 
+    <div id="greetingspage">
+        <h3><label id="greetings"></label></h3>
+    </div>
+    
+    <div id="balancecheck">
+        <h3><label id="balance"></label></h3>
+    </div>
+
+    <div id="recharge">
+        <br><br>
+        <label>Enter the amount to be recharged:</label><input type="text" id="rechargeamount"><br>
+        <button onclick="amountrecharge()">Recharge</button><br>
+    </div>
+
+    <div id="viewtravelhistory">
+        <label id="travelhistory"></label>
+    </div>
+
+    <div id="travel">
+        <label id="ticketfair"></label>
+        <label>Enter the TicketID:</label><input type="text" id="newticketid"><br><br>
+        <button onclick="Check()">Buy</button>
+    </div>
+
+    <div id="exit">
+        <label>You are existing from the Mainmenu</label>
+    </div>
+</body>
+<script src="index.js"></script>
+</html>

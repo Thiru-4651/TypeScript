@@ -1,0 +1,59 @@
+.homepage
+{
+    /* margin: 20% 40% ;
+    border: 2px solid black;
+    border-color: black ;
+    align-items: center;
+    align-content: center; */
+
+    display: block;
+}
+.sign-up ,.sign-in,.sign-in-header,.welcome,.medicine-details,.purchase,.cancel,.top-up,.show-balance,.order-history
+{
+    display: none;
+}
+/* .sign-in
+{
+    display: none;
+}
+.sign-in-header
+{
+    display: none;
+}
+.welcome
+{
+    display: none;
+    align-items: center;
+}
+.medicine-details
+{
+    align-items: center;
+    display: none;
+}
+.purchase
+{
+    align-items: center;
+    display: none;
+}
+.cancel
+{
+    display: none;
+    align-items: center;
+}
+.top-up
+{
+    align-items: center;
+    display: none;
+}
+.show-balance
+{
+    align-items: center;
+    display: none;
+}
+.order-history
+{
+    align-items: center;
+    display: none;
+} */
+/* .newpage
+{} */

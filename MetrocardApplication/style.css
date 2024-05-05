@@ -1,0 +1,14 @@
+h2
+{
+    text-align: center;
+}
+#newuserpage,#reigistereduserpage,#mainmenu,#greetingspage,#balancecheck,#recharge,#viewtravelhistory,#travel,#exit
+{
+    display: none;
+}
+button
+{
+    background-color: yellow;
+    /* border-radius: 20px; */
+    padding: 5px;
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="homepage">
+        <h2>Home</h2>
+        <button onclick="newuserpage()">New User</button>
+        <button onclick="existinguserpage()">Existing User</button>
+    </div>
+
+    <div id="newuserpage">
+        <h3>SignUp Page</h3>
+        <label>UserName:</label><input type="text" id="newusername" onkeyup="checknewusername('newusername')"><br>
+        <label>User Age:</label><input type="text" id="newuserage" onkeyup="checknewuserage('newuserage')"><br>
+        <label>User Phone Number</label><input type="number" id="newuserphonenumber" onkeyup="checknewuserphonenumber('newuserphonenumber')"><br>
+        <label id="phonenumbermessage"></label><br>
+
+        <button onclick="signup()">SignUp</button>
+    </div>
+
+    <div id="existinguserpage">
+
+        <h3>SignIn Page</h3>
+        <label>User ID:</label><input type="text" id="existinguserid"><br><br>
+        <button onclick="signin()">SignIn</button><br> 
+        <label id="availableuser"></label>
+    </div>
+
+    <div id="medicinepage">
+        <h2>Medicine Page</h2>
+
+        <label id="greet"></label>
+        <button onclick="displayHomepage()">Go Home</button><br><br>
+        <button onclick="showhistory()">History</button><br><br>
+        <label id="historyDisplay"></label><br>
+
+        <h3>Want to buy medicine?</h3>
+
+        <select id="medicinelist" >
+        <option value="Paracetomol">Paracetomol</option>
+            <option value="Colpal">Colpal</option>
+            <option value="Stepsil">Stepsil</option>
+            <option value="Iodex">Iodex</option>
+            <option value="Acetherol">Acetherol</option>
+        </select>
+
+        <button onclick="medicinelistcheck()">Check</button>
+        <br><br>
+        <label id="medincineinfo"></label>
+        <br>
+        <div id="requiredcount">
+            <label>Required Count</label>
+            <input type="number" id="medicinerequiredcount">
+            <button onclick="buymedicine()">Buy</button>
+        </div>
+    </div>
+    
+</body>
+<script src="index.js"></script>
+</html>

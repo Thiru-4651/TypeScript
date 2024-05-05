@@ -1,0 +1,8 @@
+#homepage
+{
+    display: block;
+}
+#newuserpage,#existinguserpage,#medicinepage,#historyDisplay,#requiredcount
+{
+    display: none;
+}
