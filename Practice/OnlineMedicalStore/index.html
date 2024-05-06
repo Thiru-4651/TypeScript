@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <title>Online Medical Store</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+    <!-- <script src=""></script> -->
+</head>
+<body>
+    <div class="wholecontent">
+        <div class="homepage" id="homepage">
+            <h1>Online Medical Store</h1>
+            <button onclick="Signup()">Sign-up</button><br><br>
+            <button onclick="Signin()">Sign-in</button><br><br>
+        </div>
+
+        <div class="sign-up" id="sign-up">
+            <h2>Sign-up</h2>
+            <label>Name:</label><input type="text" id="newUserName"><br><br>
+            <label>Email:</label><input type="email" id="newMail"><br><br>
+            <label>Password:</label><input type="password" id="newPassword"><br><br>
+            <label>Confirm Password:</label><input type="password"><br><br>
+            <label>Phone Number</label><input type="text" id="newPhoneNumber"><br><br>
+            <!-- <label>Phone Number:</label><input type="text"><br><br> -->
+            <br>
+            <button onclick="submit()">Submit</button><br><br>
+        </div>
+
+        <div class="sign-in" id="sign-in">
+            <h2>Sign-in</h2>
+            <label>UserID:</label><input type="text" class="existingMail"><br><br>
+            <label>Password:</label><input type="password"><br><br>
+            <!-- <br> -->
+            <button onclick="submitsignin()">Sign-in</button>
+            <!-- <label onclick="ShowUserDetails()">Logged in Users</button> -->
+            <p>Default Users</p>
+            <ol>
+                <!-- <li>thiru@gmail.com</li>
+                <li>santhosh@gmail.com</li>
+                <li>sekar@gmail.com</li>
+                <li>mugunthan@gmail.com</li>
+                 -->
+            </ol>
+            </div><br><br>
+
+        <div class="sign-in-header" id="sign-in-header">
+            <button onclick="home()">Home</button>
+            <button onclick="medicineDetails()">Medicine Details</button>
+            <button onclick="Purchase()">Purchase</button>
+            <button onclick="Cancel()">Cancel</button>
+            <button onclick="Topup()">Top-up</button>
+            <button onclick="Showbalance()">Show Balance</button>
+            <button onclick="Orderhistory()">Order History</button>
+        </div>
+
+        <div class="welcome"  id="welcome">
+            <h2>Welcome</h2>
+        </div>
+
+        <div class="medicine-details" id="medicine-details">
+            <h2>Medicine Details Page</h2>
+        </div>
+
+        <div class="purchase" id="purchase">
+            <h2>Purchase Page</h2>
+
+            <input type="number" id="purchase">Enter the quantity
+        </div>
+
+        <div class="cancel" id="cancel">
+            <h2>Cancel Page</h2>
+            <table id="canceltable">
+                <tr>
+                    <th>Order ID</th>
+                <th>User ID</th>
+                <th>Medicine Name</th>
+                <th>Medicine Count</th>
+                <th>Total Amount</th>
+                <th>Action</button>
+                </tr>
+                <tbody id="rows">
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="top-up" id="top-up"> 
+            <h2>Top-up Page</h2>
+        </div>
+
+        <div class="show-balance" id="showbalance">
+            <h2>Balance</h2>
+        </div>
+
+        <div class="order-history" id="order-history">
+            <h2>Order History Page</h2>
+        </div>
+
+        <!-- h2<label id="newpage"></label> -->
+
+    </div>
+</body>
+</html>

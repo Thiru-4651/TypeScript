@@ -1,0 +1,23 @@
+body{
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#signUp,#signIn,#menu,#purchase,#topup,#medicine
+{
+    display: none;
+}
+
+#menu
+{
+    padding: 1rem;
+}
+
+#loginpage h1,#signIn h2{
+    background-color: aquamarine;
+    padding: 1rem;
+}
+
+#loginpage h2,#loginpage button
+{
+    margin: 1rem;
+}

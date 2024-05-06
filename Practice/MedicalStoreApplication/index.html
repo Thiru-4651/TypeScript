@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Store Application</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <div id="loginpage">
+        <h1>Medical Application</h1>
+        <h2>User Login</h2>
+        <button onclick="SignInPage()">Sign In</button>
+        <button onclick="SignUpPage()">Sign Up</button>
+    </div>
+
+    <div id="signUp">
+        <h2>Sign Up</h2>
+        <label>Name: </label><input type="text" id="name" placeholder="Username"><br><br>
+
+        <label>Email: </label><input id="newmail" type="text" placeholder="Email"><br><br>
+
+        <label>Phone: </label><input type="text" id="phone" placeholder="Phonenumber"><br><br>
+
+        <label>Password: </label><input type="text" id="newpassword" placeholder="Password"><br><br>
+
+        <label>Confirm Password: </label><input type="text" id="confirmpassword" placeholder="Confirm Password"><br><br>
+
+        <button onclick="SignUp()">Sign-Up</button>
+    </div>
+
+    <div id="signIn">
+        <h2>Sign In</h2>
+
+        <label>Email:</label><input type="text" id="mail" placeholder="mail">
+
+        <label>Password:</label><input type="text" id="pass" placeholder="Password">
+        <br><br>
+        <button onclick="SignIn()">Sign-In</button>
+        <label id="existinguser"></label>
+
+    </div>
+
+    <div id="menu">
+        <button onclick="Home()" id="homebutton">Home</button>
+        <button onclick="DisplayMedicine()" id="medicinebutton">Medicin Details</button>
+        <button onclick="Purchase()" id="purchasebutton">Purchase</button>
+        <button onclick="Cancel()" id="cancelbutton">Cancel</button>
+        <button onclick="OrderHistory()" id="orderhistorybutton">OrderHistory</button>
+        <button onclick="ShowBalance()" id="showbalancebutton">Balance</button>
+        <button onclick="TopUp()" id="topupbutton">Top-up</button>
+    </div>
+
+    <div id="purchase">
+
+        <h2>Purchase Medicince</h2>
+
+        <!-- <input id="quantityinput" type="number">Enter Quantity <br> -->
+
+        <!-- <div id="tableshow"> -->
+
+            <table id="table" border="3">
+                <tr>
+                    <th>Medicine Name</th>
+                    <th>Medicine Price</th>
+                    <th>Available Quantity</th>
+                    <th>Action</th>
+                </tr>
+                
+                <tbody id="rows">
+
+                </tbody>
+            </table>
+        <!-- </div> -->
+        <button onclick="Menu()" id="back">Back</button>
+    </div>
+
+    <div id="topup">
+        <input type="text" id="amount" placeholder="Enter the amount:">
+    let medicine=document.getElementById("medicine")as HTMLLabelElement;
+        <button onclick="AddAmount()">Add</button>
+    </div>
+    
+    <label id="medicine"></label>
+
+</body>
+
+</html>
