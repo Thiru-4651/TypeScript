@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlineLibraryManagement</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>OnlineLibraryManagement</h2>
+    <div id="homepage">
+        <button onclick="NewUser()">New User</button><br>
+        <br><button onclick="ExcistingUser()">Excisting User</button>
+    </div>
+
+    <div id="register">
+        <label>Name</label><input type="text" id="newusername"><br>
+        <label>Department</label><input type="text" id="newdepartment"><br>
+        <label>Mobile Number</label><input type="text" id="newmobilenumber"><br>
+        <button onclick="Register()">Register</button>
+    </div>
+
+    <div id="login">
+        <label>UserID</label><input type="text" id="newuserid"><br>
+        <button onclick="Login()">Login</button>
+        <hr><br>
+        <h3>Available Users</h3>
+        <label id="availableusers"></label>
+    </div>
+
+    <div id="mainmenu">
+        <button onclick="Home()">Home</button>
+        <button onclick="Borrowbook()">Borrowbook</button>
+        <button onclick="ShowBorrowedhistory()">ShowBorrowedhistory</button>
+        <button onclick="ReturnBooks()">ReturnBooks</button>
+        <button onclick="WalletRecharge()">WalletRecharge </button>
+        <button onclick="Exit()">Exit</button>
+    </div>
+
+    <div id="welcome">
+        <label id="welcomemessage"></label>
+    </div>
+
+    <div id="borrowbook">
+        <label id="bookdetails"></label>
+        <label>Enter the bookID:</label><input type="text" id="newbookid">
+        <br><label>Enter the bookcount:</label><input type="text" id="newbookcount"><br>
+        <button onclick="Borrow()">Borrow</button>
+    </div>
+
+    <div id="showBorrowedhistory">
+        <label id="borrowdetails"></label>
+    </div>
+
+    <div id="returnbooks">
+        <label id="inlinereturnbooks"></label>
+        <label>Enter the BorrowedID</label><input type="text" id="newborrowedid">
+        <br><button onclick="Check()">Check</button>
+    </div>
+
+    <div id="walletRecharge">
+        <label>Enter the amount to recharge: </label><input type="number" id="rechargeamount">
+        <button onclick="Recharge()">Recharge</button>
+        <label id="rechargemessage"></label>
+    </div>
+
+
+</body>
+<script src="index.js"></script>
+</html>
