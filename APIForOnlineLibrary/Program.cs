@@ -1,6 +1,9 @@
 using APIForOnlineLibrary;
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore;
+using APIForOnlineLibrary.Controllers;
 
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDB")));	
 // Add services to the container.
 
 builder.Services.AddControllers();

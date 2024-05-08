@@ -1,105 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-    <title>Online Medical Store</title>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Medical Store</title>
     <link rel="stylesheet" href="style.css">
-    <script src="index.js"></script>
-    <!-- <script src=""></script> -->
 </head>
+
 <body>
-    <div class="wholecontent">
-        <div class="homepage" id="homepage">
-            <h1>Online Medical Store</h1>
-            <button onclick="Signup()">Sign-up</button><br><br>
-            <button onclick="Signin()">Sign-in</button><br><br>
-        </div>
+    <h3>Welcome To Online Medical Store</h3>
 
-        <div class="sign-up" id="sign-up">
-            <h2>Sign-up</h2>
-            <label>Name:</label><input type="text" id="newUserName"><br><br>
-            <label>Email:</label><input type="email" id="newMail"><br><br>
-            <label>Password:</label><input type="password" id="newPassword"><br><br>
-            <label>Confirm Password:</label><input type="password"><br><br>
-            <label>Phone Number</label><input type="text" id="newPhoneNumber"><br><br>
-            <!-- <label>Phone Number:</label><input type="text"><br><br> -->
-            <br>
-            <button onclick="submit()">Submit</button><br><br>
-        </div>
+    <div id="homepage">
+        <button onclick="Signup()">SignUp</button><br><br>
+        <button onclick="Signin()">SignIn</button>
+    </div>
 
-        <div class="sign-in" id="sign-in">
-            <h2>Sign-in</h2>
-            <label>UserID:</label><input type="text" class="existingMail"><br><br>
-            <label>Password:</label><input type="password"><br><br>
-            <!-- <br> -->
-            <button onclick="submitsignin()">Sign-in</button>
-            <!-- <label onclick="ShowUserDetails()">Logged in Users</button> -->
-            <p>Default Users</p>
-            <ol>
-                <!-- <li>thiru@gmail.com</li>
-                <li>santhosh@gmail.com</li>
-                <li>sekar@gmail.com</li>
-                <li>mugunthan@gmail.com</li>
-                 -->
-            </ol>
-            </div><br><br>
+    <div id="signin">
+        <label>Enter the Mail:</label><input type="text" id="newuserid"><br><br>
+        <label>Enter the Password:</label><input type="password" id="userenteredpassword"><br><br>
+        <button onclick="Signinpage()">SignIn</button><br>
+        <!-- <hr> -->
+        <!-- <h4>Available Users:</h4>
+        <br>
+        <label id="availableusers"></label> -->
+    </div>
 
-        <div class="sign-in-header" id="sign-in-header">
-            <button onclick="home()">Home</button>
-            <button onclick="medicineDetails()">Medicine Details</button>
-            <button onclick="Purchase()">Purchase</button>
-            <button onclick="Cancel()">Cancel</button>
-            <button onclick="Topup()">Top-up</button>
-            <button onclick="Showbalance()">Show Balance</button>
-            <button onclick="Orderhistory()">Order History</button>
-        </div>
+    <div id="signup">
+        <Label>Name:</Label><input type="text" id="newusername"><br><br>
+        <label>Email:</label><input type="email" id="newusermail"><br><br>
+        <label>Password</label><input type="password" id="newuserpassword"><br><br>
+        <label>confirm Password:</label><input type="password" id="confirmpassword"><br><br>
+        <label>Phone Number</label><input type="number" id="newuserphonenumber"><br><br>
+        <br>
+        <button onclick="Signuppage()">SignUp</button>
+    </div>
 
-        <div class="welcome"  id="welcome">
-            <h2>Welcome</h2>
-        </div>
+    <div id="mainmenu">
+        <button onclick="Home()">Home</button>
+        <button onclick="PurchaseMedicine()">PurchaseMedicine</button>
+        <button onclick="MedicineDetails()">MedicineDetails</button>
+        <button onclick="OrderHistory()">OrderHistory</button>
+        <button onclick="CancelOrder()">CancelOrder</button>
+        <button onclick="Recharge()">Recharge</button>
+        <button onclick="Balance()">Balance</button>
+        <button onclick="Exit()">Exit</button>
+    </div>
 
-        <div class="medicine-details" id="medicine-details">
-            <h2>Medicine Details Page</h2>
-        </div>
+    <div id="welcome">
+        <h3><label id="welcomemessage"></label></h3>
+    </div>
 
-        <div class="purchase" id="purchase">
-            <h2>Purchase Page</h2>
-
-            <input type="number" id="purchase">Enter the quantity
-        </div>
-
-        <div class="cancel" id="cancel">
-            <h2>Cancel Page</h2>
-            <table id="canceltable">
+    <div id="purchaseMedicine">
+        <!-- <br> -->
+        <table id="table1">
+            <thead>
                 <tr>
-                    <th>Order ID</th>
-                <th>User ID</th>
-                <th>Medicine Name</th>
-                <th>Medicine Count</th>
-                <th>Total Amount</th>
-                <th>Action</button>
+                    <th>Medicine Name</th>
+                    <th>Medicine Count</th>
+                    <th>Medicine Price</th>
+                    <th>Expiry Date </th>
+                    <th>Action</th><br>
                 </tr>
-                <tbody id="rows">
-
-                </tbody>
-            </table>
-        </div>
-
-        <div class="top-up" id="top-up"> 
-            <h2>Top-up Page</h2>
-        </div>
-
-        <div class="show-balance" id="showbalance">
-            <h2>Balance</h2>
-        </div>
-
-        <div class="order-history" id="order-history">
-            <h2>Order History Page</h2>
-        </div>
-
-        <!-- h2<label id="newpage"></label> -->
+            </thead>
+            <tbody>
+                <label id="tablebody1"></label>
+            </tbody>
+        </table><br><br><br><br>
+        <Label>Enter the count of medicine:</Label><input type="number" id="medicinecount">
 
     </div>
+
+    <!-- <div id="buymedicine">
+        <label>Select the Medicine:</label>
+        <select id="medicines">
+            <option value="">Select</option>
+            <option value="Paracetomol">Paracetomol</option>
+            <option value="Colpal">Colpal</option>
+            <option value="Stepsil">Stepsil</option>
+            <option value="Iodex">Iodex</option>
+            <option value="Acetherol">Acetherol</option>
+        </select><br><br> -->
+
+        <!-- <br><br>
+        <button onclick="BuyMedicine()">Buy</button>
+        <label id="purchasing"></label>
+    </div> -->
+
+    <div id="medicinedetails">
+
+        <br><br><button onclick="AddMedicine()">Add</button><br>
+        <table id="table2">
+            <thead>
+                <tr>
+                    <th>Medicine Name</th>
+                    <th>Medicine Count</th>
+                    <th>Medicine Price</th>
+                    <th>Expiry Date </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <label id="tablebody2"></label> -->
+            </tbody>
+        </table><br>
+    </div>
+
+    <div id="addmedicine">
+        <label>Medicine Name</label><input type="text" id="newmedicinename"><br>
+        <label>Medicine Count</label><input type="number" id="newmedicinecount"><br>
+        <label>Medicine Price</label><input type="number" id="newmedicineprice"><br>
+        <label>Expiry Date </label><input type="text" id="newexpirydate"><br>
+        <button onclick="MedicineSubmit()">Submit</button>
+    </div>
+
+    <div id="medicineeditpage">
+        <label>Medicine Name</label><input type="text" id="editmedicinename"><br>
+        <label>Medicine Count</label><input type="number" id="editmedicinecount"><br>
+        <label>Medicine Price</label><input type="number" id="editmedicineprice"><br>
+        <!-- <label>Expiry Date </label><input type="text" id="editexpirydate"><br> -->
+        <button onclick="EditSubmit()">Confirm</button>
+    </div>
+
+    <div id="orderHistory">
+        <label id="history"></label>
+    </div>
+
+    <div id="cancelOrder">
+        <table id="table3">
+            <thead>
+                <tr>
+                    <th>OrderID</th>
+                    <th>UserID</th>
+                    <th>Medicine Name</th>
+                    <th>Medicine Count</th>
+                    <th>Total Price</th>
+                    <th>Status </th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <label id="tablebody3"></label>
+            </tbody>
+        </table><br>
+    </div>
+
+    <div id="recharge">
+        
+        <label>Enter the Amount to recharge: </label><input type="number" id="rechargeamount"><br><br>
+        <button onclick="AmountRecharge()">Recharge</button>
+    </div>
+
+    <div id="showbalance">
+        <label id="currentbalance"></label><br>
+    </div>
+
+
 </body>
+<script src="index.js"></script>
+
 </html>

@@ -1,4 +1,8 @@
+using APIForMedicalStore.Controllers;
+using Microsoft.EntityFrameworkCore;
+// using API.controller;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresDB")));
 
 // Add services to the container.
 
@@ -12,6 +16,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
@@ -21,5 +26,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors(policy =>policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+
+app.MapGet("/", () => "Online Medical Store");
 
 app.Run();

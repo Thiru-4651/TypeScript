@@ -10,21 +10,27 @@ namespace APIForOnlineLibrary.Controllers
     [ApiController]
     public class UserDetailsController:ControllerBase
     {
-        private static List<UserDetails>_Users=new List<UserDetails>
+        private readonly ApplicationDBContext _dbContext;
+
+        public UserDetailsController (ApplicationDBContext applicationDBContext)
         {
-            new UserDetails{UserID=1,UserName="Thiru",Department="CSE",MobileNumber="9894583822",Balance=100},
-            new UserDetails{UserID=2,UserName="Santhosh",Department="IT",MobileNumber="9894582238",Balance=100}
-        };
+            _dbContext=applicationDBContext;
+        } 
+        // private static List<UserDetails>_Users=new List<UserDetails>
+        // {
+        //     new UserDetails{UserID=1,UserName="Thiru",Department="CSE",Email="thiru@gmail.com",Password="thiru",MobileNumber="9894583822",Balance=100},
+        //     new UserDetails{UserID=2,UserName="Santhosh",Department="IT",Email="santhosh@gmail.com",Password="santhosh",MobileNumber="9894582238",Balance=100}
+        // };
         [HttpGet]
         public IActionResult GetUsers()
         {
-            return Ok(_Users);
+            return Ok(_dbContext.users.ToList());
         }
 
         [HttpGet("{id}")]
         public IActionResult GetMedicine(int id)
         {
-            var medicine = _Users.Find(m => m.UserID == id);
+            var medicine = _dbContext.users.FirstOrDefault(m => m.UserID == id);
             if (medicine == null)
             {
                 return NotFound();
@@ -35,7 +41,8 @@ namespace APIForOnlineLibrary.Controllers
         [HttpPost]
         public IActionResult PostMedicine([FromBody] UserDetails medicine)
         {
-            _Users.Add(medicine);
+            _dbContext.users.Add(medicine);
+            _dbContext.SaveChanges();
             // You might want to return CreatedAtAction or another appropriate response
             return Ok();
         }
@@ -43,12 +50,18 @@ namespace APIForOnlineLibrary.Controllers
         [HttpPut("{id}")]
         public IActionResult PutMedicine(int id, [FromBody] UserDetails medicine)
         {
-            var index = _Users.FindIndex(m => m.UserID == id);
-            if (index < 0)
+            var index = _dbContext.users.FirstOrDefault(m => m.UserID == id);
+            if (index == null)
             {
                 return NotFound();
             }
-            _Users[index] = medicine;
+            index.Balance=medicine.Balance;
+            index.Department=index.Department;
+            index.Email=medicine.Email;
+            index.MobileNumber=medicine.MobileNumber;
+            index.Password=medicine.Password;
+            index.UserName=medicine.UserName;
+            _dbContext.SaveChanges();
             // You might want to return NoContent or another appropriate response
             return Ok();
         }
@@ -56,12 +69,12 @@ namespace APIForOnlineLibrary.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteContact(int id)
         {
-            var medicine = _Users.Find(m => m.UserID == id);
+            var medicine = _dbContext.users.FirstOrDefault(m => m.UserID == id);
             if (medicine == null)
             {
                 return NotFound();
             }
-            _Users.Remove(medicine);
+            _dbContext.users.Remove(medicine);
             // You might want to return NoContent or another appropriate response
             return Ok();
         }

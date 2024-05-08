@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var currentuser;
-var count = 3;
+var count = 2;
 var homepage = document.getElementById("homepage");
 var register = document.getElementById("register");
 var login = document.getElementById("login");
@@ -45,6 +45,8 @@ var borrowbook = document.getElementById("borrowbook");
 var showBorrowedhistory = document.getElementById("showBorrowedhistory");
 var returnbooks = document.getElementById("returnbooks");
 var walletRecharge = document.getElementById("walletRecharge");
+var buypage = document.getElementById("buypage");
+var returnpage = document.getElementById("returnpage");
 function CloseAll() {
     homepage.style.display = "none";
     register.style.display = "none";
@@ -52,8 +54,10 @@ function CloseAll() {
     mainmenu.style.display = "none";
     welcome.style.display = "none";
     borrowbook.style.display = "none";
+    buypage.style.display = "none";
     showBorrowedhistory.style.display = "none";
     returnbooks.style.display = "none";
+    returnpage.style.display = "none";
     walletRecharge.style.display = "none";
 }
 function NewUser() {
@@ -64,47 +68,273 @@ function Register() {
     var newusername = document.getElementById("newusername").value;
     var newdepartment = document.getElementById("newdepartment").value;
     var newmobilenumber = document.getElementById("newmobilenumber").value;
+    var newmail = document.getElementById("newmail").value;
+    var newpassword = document.getElementById("newpassword").value;
     var newuser = {
-        userID: count++,
+        userID: 3,
         userName: newusername,
         department: newdepartment,
+        email: newmail,
+        password: newpassword,
         mobileNumber: newmobilenumber,
-        balance: 0
+        balance: 100
     };
     addUsers(newuser);
     alert("Registered Successfully");
     CloseAll();
-    homepage.style.display = "block";
+    //login.style.display="block";
+    ExcistingUser();
 }
 function ExcistingUser() {
     return __awaiter(this, void 0, void 0, function () {
-        var userlist, availableusers, i;
+        return __generator(this, function (_a) {
+            CloseAll();
+            login.style.display = "block";
+            return [2 /*return*/];
+        });
+    });
+}
+function Login() {
+    return __awaiter(this, void 0, void 0, function () {
+        var newusermail, signinpassword, userlist, flag, flag1, i;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    CloseAll();
-                    login.style.display = "block";
+                    newusermail = document.getElementById("newuserid").value;
+                    signinpassword = document.getElementById("signinpassword").value;
                     return [4 /*yield*/, fetchUsers()];
                 case 1:
                     userlist = _a.sent();
-                    availableusers = document.getElementById("availableusers");
-                    availableusers.innerHTML = "";
+                    flag = true;
+                    flag1 = true;
                     for (i = 0; i < userlist.length; i++) {
-                        availableusers.innerHTML += "UserID:".concat(userlist[i].userID, " |  UserName: ").concat(userlist[i].userName, " <br>");
+                        if (newusermail == userlist[i].email) {
+                            flag = false;
+                            if (signinpassword == userlist[i].password) {
+                                flag1 = false;
+                                currentuser = userlist[i];
+                                alert("Logged In Successfully");
+                                Mainmenu();
+                            }
+                        }
+                    }
+                    if (flag) {
+                        alert("Invalid MailID");
+                    }
+                    if (flag1) {
+                        alert("Invalid Password");
                     }
                     return [2 /*return*/];
             }
         });
     });
 }
-function Login() {
+function Mainmenu() {
+    CloseAll();
+    mainmenu.style.display = "block";
+    welcome.style.display = "block";
+    var welcomemessage = document.getElementById("welcomemessage");
+    welcomemessage.innerHTML = "Welcome ".concat(currentuser.userName);
+}
+function Home() {
+    Mainmenu();
+}
+function Exit() {
+    CloseAll();
+    homepage.style.display = "block";
+}
+function Borrowbook() {
     return __awaiter(this, void 0, void 0, function () {
-        var newuserid;
+        var tablebody, booklist, i, row;
         return __generator(this, function (_a) {
-            newuserid = document.getElementById("newuserid").value;
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0:
+                    CloseAll();
+                    mainmenu.style.display = "block";
+                    borrowbook.style.display = "block";
+                    tablebody = document.querySelector("#table1 tbody");
+                    tablebody.innerHTML = "";
+                    return [4 /*yield*/, fetchBooks()];
+                case 1:
+                    booklist = _a.sent();
+                    for (i = 0; i < booklist.length; i++) {
+                        row = document.createElement("tr");
+                        row.innerHTML += "<table><tr><td> ".concat(booklist[i].bookID, "</td>\n    <tr>").concat(booklist[i].bookName, "</tr>\n    <td>").concat(booklist[i].authorName, "</td>\n    <td>").concat(booklist[i].bookCount, "</td>\n    <td><button onclick=\"Check(").concat(booklist[i].bookID, ")\">Check</button></td></tr></table>");
+                        tablebody.appendChild(row);
+                    }
+                    return [2 /*return*/];
+            }
         });
     });
+}
+var selectedbookid;
+function Check(id) {
+    selectedbookid = id;
+    CloseAll();
+    mainmenu.style.display = "block";
+    borrowbook.style.display = "block";
+    buypage.style.display = "block";
+}
+function Borrow() {
+    return __awaiter(this, void 0, void 0, function () {
+        var newbookcount, flag, booklist, i, newborrow;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    newbookcount = document.getElementById("newbookcount").value;
+                    flag = true;
+                    return [4 /*yield*/, fetchBooks()];
+                case 1:
+                    booklist = _a.sent();
+                    for (i = 0; i < booklist.length; i++) {
+                        if (booklist[i].bookID == selectedbookid) {
+                            flag = false;
+                            if (booklist[i].bookCount >= parseInt(newbookcount)) {
+                                booklist[i].bookCount -= parseInt(newbookcount);
+                                updateBook(booklist[i].bookID, booklist[i]);
+                                newborrow = {
+                                    borrowID: 5,
+                                    bookID: selectedbookid,
+                                    userID: currentuser.userID,
+                                    borrowedDate: new Date(),
+                                    borrowBookCount: parseInt(newbookcount),
+                                    status: "Borrowed",
+                                    paidFineAmount: 0
+                                };
+                                addBorrows(newborrow);
+                                alert("Book Borrowed Successfully");
+                            }
+                            else {
+                                alert("Book count not available");
+                            }
+                        }
+                    }
+                    if (flag) {
+                        alert("Invalid BookID");
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function ShowBorrowedhistory() {
+    return __awaiter(this, void 0, void 0, function () {
+        var borrowdetails, borrowlist, flag, i;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    CloseAll();
+                    mainmenu.style.display = "block";
+                    showBorrowedhistory.style.display = "block";
+                    borrowdetails = document.getElementById("borrowdetails");
+                    return [4 /*yield*/, fetchBorrows()];
+                case 1:
+                    borrowlist = _a.sent();
+                    flag = true;
+                    borrowdetails.innerHTML = "";
+                    for (i = 0; i < borrowlist.length; i++) {
+                        if (currentuser.userID == borrowlist[i].userID) {
+                            flag = false;
+                            borrowdetails.innerHTML += "BorrowID: ".concat(borrowlist[i].borrowID, "  | BookID: ").concat(borrowlist[i].bookID, " UserID: ").concat(borrowlist[i].userID, " |BorrowDate:  ").concat(borrowlist[i].borrowedDate, " |BorrowBookCount: ").concat(borrowlist[i].borrowBookCount, "  |Status: ").concat(borrowlist[i].status, " | PaidFineAmount:").concat(borrowlist[i].paidFineAmount, "<br>");
+                        }
+                    }
+                    if (flag) {
+                        alert("You have no borrowed History");
+                        borrowdetails.innerHTML = "You have no borrowed History";
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function ReturnBooks() {
+    return __awaiter(this, void 0, void 0, function () {
+        var inlinereturnbooks, borrowlist, flag, i;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    CloseAll();
+                    mainmenu.style.display = "block";
+                    returnbooks.style.display = "block";
+                    inlinereturnbooks = document.getElementById("inlinereturnbooks");
+                    inlinereturnbooks.innerHTML = "";
+                    return [4 /*yield*/, fetchBorrows()];
+                case 1:
+                    borrowlist = _a.sent();
+                    flag = true;
+                    for (i = 0; i < borrowlist.length; i++) {
+                        if (currentuser.userID == borrowlist[i].userID && borrowlist[i].status == "Borrowed") {
+                            flag = false;
+                            inlinereturnbooks.innerHTML += "BorrowID: ".concat(borrowlist[i].borrowID, "  | BookID: ").concat(borrowlist[i].bookID, " UserID: ").concat(borrowlist[i].userID, "  |BorrowBookCount: ").concat(borrowlist[i].borrowBookCount, "  |Status: ").concat(borrowlist[i].status, " <br>");
+                            //Return();
+                        }
+                    }
+                    if (flag) {
+                        alert("You haven't buyed any book to return");
+                        inlinereturnbooks.innerHTML = "You haven't buyed any book to return";
+                    }
+                    else {
+                        CloseAll();
+                        mainmenu.style.display = "block";
+                        returnbooks.style.display = "block";
+                        returnpage.style.display = "block";
+                        // let borrowlist = await fetchBorrows();
+                        // let newborrowedid = (document.getElementById("newborrowedid") as HTMLInputElement).value;
+                        // let flag = true;
+                        // for (let i = 0; i < borrowlist.length; i++) {
+                        //   if (currentuser.userID == borrowlist[i].userID && borrowlist[i].status == "Borrowed" && parseInt(newborrowedid) == borrowlist[i].borrowID) {
+                        //     flag = false;
+                        //     borrowlist[i].status = "Returned";
+                        //     updateBorrow(borrowlist[i].borrowID, borrowlist[i]);
+                        //     alert("Book Returned Successfully");
+                        //   }
+                        // }
+                        // if (flag) {
+                        //   alert("Invalid BorrowID");
+                        // }
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function Return() {
+    return __awaiter(this, void 0, void 0, function () {
+        var borrowlist, newborrowedid, flag, i;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, fetchBorrows()];
+                case 1:
+                    borrowlist = _a.sent();
+                    newborrowedid = document.getElementById("newborrowedid").value;
+                    flag = true;
+                    for (i = 0; i < borrowlist.length; i++) {
+                        if (currentuser.userID == borrowlist[i].userID && borrowlist[i].status == "Borrowed" && parseInt(newborrowedid) == borrowlist[i].borrowID) {
+                            flag = false;
+                            borrowlist[i].status = "Returned";
+                            updateBorrow(borrowlist[i].borrowID, borrowlist[i]);
+                            alert("Book Returned Successfully");
+                        }
+                    }
+                    if (flag) {
+                        alert("Invalid BorrowID");
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function WalletRecharge() {
+    CloseAll();
+    mainmenu.style.display = "block";
+    walletRecharge.style.display = "block";
+}
+function Recharge() {
+    var rechargeamount = document.getElementById("rechargeamount").value;
+    var rechargemessage = document.getElementById("rechargemessage");
+    currentuser.balance += parseInt(rechargeamount);
+    updateUser(currentuser.userID, currentuser);
+    rechargemessage.innerHTML = "Your Updated Balance is: ".concat(currentuser.balance);
 }
 function fetchUsers() {
     return __awaiter(this, void 0, void 0, function () {
@@ -168,7 +398,7 @@ function addUsers(user) {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fetch('http://localhost:5043/api/bookdetails', {
+                case 0: return [4 /*yield*/, fetch('http://localhost:5043/api/userdetails', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -201,6 +431,72 @@ function addBorrows(borrow) {
                     response = _a.sent();
                     if (!response.ok) {
                         throw new Error('Failed to add contact');
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function updateBook(id, book) {
+    return __awaiter(this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, fetch("http://localhost:5043/api/bookdetails/".concat(id), {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(book)
+                    })];
+                case 1:
+                    response = _a.sent();
+                    if (!response.ok) {
+                        throw new Error('Failed to update contact');
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function updateBorrow(id, borrow) {
+    return __awaiter(this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, fetch("http://localhost:5043/api/borrowdetails/".concat(id), {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(borrow)
+                    })];
+                case 1:
+                    response = _a.sent();
+                    if (!response.ok) {
+                        throw new Error('Failed to update contact');
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function updateUser(id, book) {
+    return __awaiter(this, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, fetch("http://localhost:5043/api/userdetails/".concat(id), {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(book)
+                    })];
+                case 1:
+                    response = _a.sent();
+                    if (!response.ok) {
+                        throw new Error('Failed to update contact');
                     }
                     return [2 /*return*/];
             }
