@@ -15,7 +15,7 @@ interface UserDetails {
     userEmail: string;
     userPassword: string;
     userPhoneNumber: string;
-    balance: number
+    balance: number;
 
     // constructor(UserName:String,paramUserEmail: string, paramUserPassword: string, paramUserPhoneNumber: string,Balance: number) {
 
@@ -37,6 +37,7 @@ interface MedicineDetails {
     medicineCount: number;
     medicinePrice: number;
     expiryDate: string;
+    image:any;
 
     // constructor(paramMedicineName: string, paramMedicineCount: number, paramMedicinePrice: number, paramExpiryDate: Date) {
     //     MedicineIdAutoIncrement++;
@@ -323,6 +324,7 @@ async function MedicineDetails() {
             <td>${MedicineList[i].medicineCount}</td>
             <td>${MedicineList[i].medicinePrice}</td>
             <td>${MedicineList[i].expiryDate}</td>
+            <td><img src="${'data:image/jpg;base64,'+MedicineList[i].image}"</td>
             <td><button onclick="Edit(${MedicineList[i].medicineID})">Edit</button>
             <button onclick="Delete(${MedicineList[i].medicineID})">Delete</button></td>
             `;
@@ -382,23 +384,47 @@ function AddMedicine() {
     addmedicine.style.display = "block";
 }
 
-function MedicineSubmit() {
+async function MedicineSubmit() {
     let newmedicinename = (document.getElementById("newmedicinename") as HTMLInputElement).value;
     let newmedicinecount = (document.getElementById("newmedicinecount") as HTMLInputElement).value;
     let newmedicineprice = (document.getElementById("newmedicineprice") as HTMLInputElement).value;
     let newexpirydate = (document.getElementById("newexpirydate") as HTMLInputElement).value;
+    let newmedicineimage=(document.getElementById("newmedicineimage")as HTMLInputElement);
+
+    if(!newmedicineimage.files || newmedicineimage.files.length == 0){
+        return 
+    }
+    let file=newmedicineimage.files[0];
+    let data= await ConvertToByteArr(file);
 
     const newmedicine: MedicineDetails = {
         medicineID: 0,
         medicineName: newmedicinename,
         medicineCount: parseInt(newmedicinecount),
         medicinePrice: parseInt(newmedicineprice),
-        expiryDate: newexpirydate
+        expiryDate: newexpirydate,
+        image:data
     };
     AddMedicines(newmedicine);
     alert("Medicine Added Successfully");
 }
 
+function ConvertToByteArr(file: File): Promise<string>{
+    return new Promise((resolve,reject) =>{
+        let reader = new FileReader();
+        reader.onload=()=>{
+            let buffer = reader.result as string;
+            let data = buffer.split(",")[1];
+            resolve(data);
+        }
+        reader.onerror=()=>{
+            reject(new Error('Failed to read data'));
+        };
+        reader.readAsDataURL(file)
+    });
+ }
+
+ 
 async function OrderHistory() {
     CloseAll();
     mainmenu.style.display = "block";
@@ -406,50 +432,88 @@ async function OrderHistory() {
     let flag = true;
 
     let orderlist = await fetchOrderDetails();
-    let history = document.getElementById("history") as HTMLLabelElement;
-    history.innerHTML = "";
+
+    let tablebody = document.querySelector("#ordertable tbody") as HTMLTableSectionElement;
+    tablebody.innerHTML = "";
+
+    // let history = document.getElementById("history") as HTMLLabelElement;
+    // history.innerHTML = "";
 
     for (let i = 0; i < orderlist.length; i++) {
         if (currentuser.userID == orderlist[i].userID) {
             flag = false;
-            history.innerHTML += `OrderID: ${orderlist[i].orderID} |  UserID: ${orderlist[i].userID} |    MedicineName: ${orderlist[i].medicineName} |    Medicine Count: ${orderlist[i].medicineCount} |    TotalPrice: ${orderlist[i].totalPrice} |    OrderStatus: ${orderlist[i].orderStatus} <br>`
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${orderlist[i].orderID}</td>
+                    <td>${orderlist[i].userID}</td>
+                    <td>${orderlist[i].medicineName}</td>
+                    <td>${orderlist[i].medicineCount}</td>
+                    <td>${orderlist[i].totalPrice}</td>
+                    <td>${orderlist[i].orderStatus}</td>
+                    `;
+            tablebody.appendChild(row);
         }
     }
     if (flag) {
-        history.innerHTML = "You have no order history";
+        tablebody.innerHTML = "You have no order history";
     }
 }
-// function tableToCSV() {
+function tableToCSV() {
 
-// 	// Variable to store the final csv data
-// 	let csv_data = [];
+	// Variable to store the final csv data
+	let csv_data:any = [];
 
-// 	// Get each row data
-// 	let rows = document.getElementsByTagName('tr');
-// 	for (let i = 0; i < rows.length; i++) {
+	// Get each row data
+	let rows = document.querySelectorAll('#ordertable tr');
+	for (let i = 0; i < rows.length; i++) {
 
-// 		// Get each column data
-// 		let cols = rows[i].querySelectorAll('td,th');
+		// Get each column data
+		let cols = rows[i].querySelectorAll('td,th');
 
-// 		// Stores each csv row data
-// 		let csvrow = [];
-// 		for (let j = 0; j < cols.length; j++) {
+		// Stores each csv row data
+		let csvrow = [];
+		for (let j = 0; j < cols.length; j++) {
 
-// 			// Get the text data of each cell of
-// 			// a row and push it to csvrow
-// 			csvrow.push(cols[j].innerHTML);
-// 		}
+			// Get the text data of each cell of
+			// a row and push it to csvrow
+			csvrow.push(cols[j].innerHTML);
+		}
 
-// 		// Combine each column value with comma
-// 		csv_data.push(csvrow.join(","));
-// 	}
-// 	// Combine each row data with new line character
-// 	csv_data = csv_data.join('\n');
+		// Combine each column value with comma
+		csv_data.push(csvrow.join(","));
+	}
+	// Combine each row data with new line character
+	csv_data = csv_data.join('\n');
+    downloadCSVFile(csv_data);
 
-// 	/* We will use this function later to download
-// 	the data in a csv file downloadCSVFile(csv_data);
-// 	*/
-// }
+	/* We will use this function later to download
+	the data in a csv file downloadCSVFile(csv_data);
+	*/
+}
+
+function downloadCSVFile(csv_data:any) {
+
+	// Create CSV file object and feed our
+	// csv_data into it
+	let CSVFile = new Blob([csv_data], { type: "text/csv" });
+
+	// Create to temporary link to initiate
+	// download process
+	let temp_link = document.createElement('a');
+
+	// Download csv file
+	temp_link.download = "orderhistory.csv";
+	let url = window.URL.createObjectURL(CSVFile);
+	temp_link.href = url;
+
+	// This link should not be displayed
+	temp_link.style.display = "none";
+	document.body.appendChild(temp_link);
+
+	// Automatically click the link to trigger download 
+	temp_link.click();
+	document.body.removeChild(temp_link);
+}
+
 
 
 async function CancelOrder() {

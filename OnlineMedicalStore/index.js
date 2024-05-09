@@ -277,7 +277,7 @@ function MedicineDetails() {
                     tablebody.innerHTML = "";
                     for (i = 0; i < MedicineList.length; i++) {
                         row = document.createElement("tr");
-                        row.innerHTML = "<td>".concat(MedicineList[i].medicineName, "</td>\n            <td>").concat(MedicineList[i].medicineCount, "</td>\n            <td>").concat(MedicineList[i].medicinePrice, "</td>\n            <td>").concat(MedicineList[i].expiryDate, "</td>\n            <td><button onclick=\"Edit(").concat(MedicineList[i].medicineID, ")\">Edit</button>\n            <button onclick=\"Delete(").concat(MedicineList[i].medicineID, ")\">Delete</button></td>\n            ");
+                        row.innerHTML = "<td>".concat(MedicineList[i].medicineName, "</td>\n            <td>").concat(MedicineList[i].medicineCount, "</td>\n            <td>").concat(MedicineList[i].medicinePrice, "</td>\n            <td>").concat(MedicineList[i].expiryDate, "</td>\n            <td><img src=\"").concat('data:image/jpg;base64,' + MedicineList[i].image, "\"</td>\n            <td><button onclick=\"Edit(").concat(MedicineList[i].medicineID, ")\">Edit</button>\n            <button onclick=\"Delete(").concat(MedicineList[i].medicineID, ")\">Delete</button></td>\n            ");
                         tablebody.append(row);
                     }
                     return [2 /*return*/];
@@ -342,23 +342,55 @@ function AddMedicine() {
     addmedicine.style.display = "block";
 }
 function MedicineSubmit() {
-    var newmedicinename = document.getElementById("newmedicinename").value;
-    var newmedicinecount = document.getElementById("newmedicinecount").value;
-    var newmedicineprice = document.getElementById("newmedicineprice").value;
-    var newexpirydate = document.getElementById("newexpirydate").value;
-    var newmedicine = {
-        medicineID: 0,
-        medicineName: newmedicinename,
-        medicineCount: parseInt(newmedicinecount),
-        medicinePrice: parseInt(newmedicineprice),
-        expiryDate: newexpirydate
-    };
-    AddMedicines(newmedicine);
-    alert("Medicine Added Successfully");
+    return __awaiter(this, void 0, void 0, function () {
+        var newmedicinename, newmedicinecount, newmedicineprice, newexpirydate, newmedicineimage, file, data, newmedicine;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    newmedicinename = document.getElementById("newmedicinename").value;
+                    newmedicinecount = document.getElementById("newmedicinecount").value;
+                    newmedicineprice = document.getElementById("newmedicineprice").value;
+                    newexpirydate = document.getElementById("newexpirydate").value;
+                    newmedicineimage = document.getElementById("newmedicineimage");
+                    if (!newmedicineimage.files || newmedicineimage.files.length == 0) {
+                        return [2 /*return*/];
+                    }
+                    file = newmedicineimage.files[0];
+                    return [4 /*yield*/, ConvertToByteArr(file)];
+                case 1:
+                    data = _a.sent();
+                    newmedicine = {
+                        medicineID: 0,
+                        medicineName: newmedicinename,
+                        medicineCount: parseInt(newmedicinecount),
+                        medicinePrice: parseInt(newmedicineprice),
+                        expiryDate: newexpirydate,
+                        image: data
+                    };
+                    AddMedicines(newmedicine);
+                    alert("Medicine Added Successfully");
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+function ConvertToByteArr(file) {
+    return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var buffer = reader.result;
+            var data = buffer.split(",")[1];
+            resolve(data);
+        };
+        reader.onerror = function () {
+            reject(new Error('Failed to read data'));
+        };
+        reader.readAsDataURL(file);
+    });
 }
 function OrderHistory() {
     return __awaiter(this, void 0, void 0, function () {
-        var flag, orderlist, history, i;
+        var flag, orderlist, tablebody, i, row;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -369,21 +401,68 @@ function OrderHistory() {
                     return [4 /*yield*/, fetchOrderDetails()];
                 case 1:
                     orderlist = _a.sent();
-                    history = document.getElementById("history");
-                    history.innerHTML = "";
+                    tablebody = document.querySelector("#ordertable tbody");
+                    tablebody.innerHTML = "";
+                    // let history = document.getElementById("history") as HTMLLabelElement;
+                    // history.innerHTML = "";
                     for (i = 0; i < orderlist.length; i++) {
                         if (currentuser.userID == orderlist[i].userID) {
                             flag = false;
-                            history.innerHTML += "OrderID: ".concat(orderlist[i].orderID, " |  UserID: ").concat(orderlist[i].userID, " |    MedicineName: ").concat(orderlist[i].medicineName, " |    Medicine Count: ").concat(orderlist[i].medicineCount, " |    TotalPrice: ").concat(orderlist[i].totalPrice, " |    OrderStatus: ").concat(orderlist[i].orderStatus, " <br>");
+                            row = document.createElement("tr");
+                            row.innerHTML = "<td>".concat(orderlist[i].orderID, "</td>\n                    <td>").concat(orderlist[i].userID, "</td>\n                    <td>").concat(orderlist[i].medicineName, "</td>\n                    <td>").concat(orderlist[i].medicineCount, "</td>\n                    <td>").concat(orderlist[i].totalPrice, "</td>\n                    <td>").concat(orderlist[i].orderStatus, "</td>\n                    ");
+                            tablebody.appendChild(row);
                         }
                     }
                     if (flag) {
-                        history.innerHTML = "You have no order history";
+                        tablebody.innerHTML = "You have no order history";
                     }
                     return [2 /*return*/];
             }
         });
     });
+}
+function tableToCSV() {
+    // Variable to store the final csv data
+    var csv_data = [];
+    // Get each row data
+    var rows = document.querySelectorAll('#ordertable tr');
+    for (var i = 0; i < rows.length; i++) {
+        // Get each column data
+        var cols = rows[i].querySelectorAll('td,th');
+        // Stores each csv row data
+        var csvrow = [];
+        for (var j = 0; j < cols.length; j++) {
+            // Get the text data of each cell of
+            // a row and push it to csvrow
+            csvrow.push(cols[j].innerHTML);
+        }
+        // Combine each column value with comma
+        csv_data.push(csvrow.join(","));
+    }
+    // Combine each row data with new line character
+    csv_data = csv_data.join('\n');
+    downloadCSVFile(csv_data);
+    /* We will use this function later to download
+    the data in a csv file downloadCSVFile(csv_data);
+    */
+}
+function downloadCSVFile(csv_data) {
+    // Create CSV file object and feed our
+    // csv_data into it
+    var CSVFile = new Blob([csv_data], { type: "text/csv" });
+    // Create to temporary link to initiate
+    // download process
+    var temp_link = document.createElement('a');
+    // Download csv file
+    temp_link.download = "orderhistory.csv";
+    var url = window.URL.createObjectURL(CSVFile);
+    temp_link.href = url;
+    // This link should not be displayed
+    temp_link.style.display = "none";
+    document.body.appendChild(temp_link);
+    // Automatically click the link to trigger download 
+    temp_link.click();
+    document.body.removeChild(temp_link);
 }
 function CancelOrder() {
     return __awaiter(this, void 0, void 0, function () {

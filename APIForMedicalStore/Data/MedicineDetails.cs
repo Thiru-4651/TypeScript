@@ -11,4 +11,6 @@ public class MedicineDetails
     public int MedicineCount { get; set; }
     public int MedicinePrice { get; set; }
     public DateTime ExpiryDate { get; set; }
+    public byte[] Image { get; set; }
+
 }

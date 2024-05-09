@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h3>Welcome To Online Medical Store</h3>
+    <h1>Welcome To Online Medical Store</h1>
 
     <div id="homepage">
         <button onclick="Signup()">SignUp</button><br><br>
@@ -60,7 +60,8 @@
                     <th>Medicine Count</th>
                     <th>Medicine Price</th>
                     <th>Expiry Date </th>
-                    <th>Action</th><br>
+                    <th>Action</th>
+                    <br>
                 </tr>
             </thead>
             <tbody>
@@ -97,6 +98,7 @@
                     <th>Medicine Count</th>
                     <th>Medicine Price</th>
                     <th>Expiry Date </th>
+                    <th>Image</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -107,22 +109,42 @@
     </div>
 
     <div id="addmedicine">
-        <label>Medicine Name</label><input type="text" id="newmedicinename"><br>
-        <label>Medicine Count</label><input type="number" id="newmedicinecount"><br>
-        <label>Medicine Price</label><input type="number" id="newmedicineprice"><br>
-        <label>Expiry Date </label><input type="text" id="newexpirydate"><br>
+        <label>Medicine Name: </label><input type="text" id="newmedicinename"><br>
+        <label>Medicine Count: </label><input type="number" id="newmedicinecount"><br>
+        <label>Medicine Price: </label><input type="number" id="newmedicineprice"><br>
+        <label>Expiry Date: </label><input type="text" id="newexpirydate"><br>
+        <label>Upload Medicine Image:</label><input type="file" id="newmedicineimage"><br>
         <button onclick="MedicineSubmit()">Submit</button>
     </div>
 
     <div id="medicineeditpage">
-        <label>Medicine Name</label><input type="text" id="editmedicinename"><br>
-        <label>Medicine Count</label><input type="number" id="editmedicinecount"><br>
-        <label>Medicine Price</label><input type="number" id="editmedicineprice"><br>
+        <label>Medicine Name: </label><input type="text" id="editmedicinename"><br>
+        <label>Medicine Count: </label><input type="number" id="editmedicinecount"><br>
+        <label>Medicine Price: </label><input type="number" id="editmedicineprice"><br>
         <!-- <label>Expiry Date </label><input type="text" id="editexpirydate"><br> -->
         <button onclick="EditSubmit()">Confirm</button>
     </div>
 
     <div id="orderHistory">
+        <br>
+        <button onclick="tableToCSV()">Export</button><br>
+        <table id="ordertable">
+            <thead>
+                <tr>
+                    <th>OrderID</th>
+                    <th>UserID</th>
+                    <th>Medicine Name</th>
+                    <th>Medicine Count</th>
+                    <th>Total Price</th>
+                    <th>Status </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <label id="tablebody3"></label> -->
+            </tbody>
+
+        </table>
+
         <label id="history"></label>
     </div>
 

@@ -55,6 +55,7 @@ namespace APIForMedicalStore.Controllers
             newmedicine.MedicineCount=medicine.MedicineCount;
             newmedicine.MedicineName=medicine.MedicineName;
             newmedicine.MedicinePrice=medicine.MedicinePrice;
+            newmedicine.Image=medicine.Image;
             _dbcontext.SaveChanges();
             return Ok();
         }

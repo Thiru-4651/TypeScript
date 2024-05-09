@@ -8,7 +8,7 @@ button
     border-radius: 5px;
     border: none;
     color: darkblue;
-    margin-left: 30px;
+    /* margin-left: 30px; */
 }
 body
 {
@@ -25,6 +25,11 @@ table
 tbody
 {
     color: rgb(1, 1, 101);
+}
+
+h1
+{
+    text-align: center;
 }
 
 #mainmenu
